@@ -4,9 +4,9 @@
      * window.angular es un parámetro que pasa al closure
      * ng es el nombre que se le da a dicho parámetro dentro del closure
      */
-// El resultado de la función se guarda en la variable mod y mainApp es el nombre que hemos dado a nuestro modulo
+    // El resultado de la función se guarda en la variable mod y mainApp es el nombre que hemos dado a nuestro modulo
     var mod = ng.module("mainApp", ["ui.router"]);
-// La configuración es para que la aplicación imprima los mensajes de debug sólo cuando éstos se activan    
+    // La configuración es para que la aplicación imprima los mensajes de debug sólo cuando éstos se activan    
     mod.config(['$logProvider', function ($logProvider) {
             $logProvider.debugEnabled(true);
         }]);
@@ -23,6 +23,7 @@
             $stateProvider
                     .state('book', {
                         url: '/book',
+                        //Es un ejemplo para llamar las distintas vistas que puede tener la pantalla.
                         views: {
                             "": {templateUrl: "src/modules/book/book.tpl.html"}
                         }
@@ -38,5 +39,4 @@
                         }
                     })
         }]);
-
 })(window.angular);
