@@ -1,6 +1,5 @@
-<div ng-init="list = true" >
-    <div id="navbar">
-        <nav class="navbar navbar-default" role="navigation">
+<div id="book-header">
+    <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -12,212 +11,91 @@
                 </button>
                 <a class="navbar-brand">Books</a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <!-- En el siguiente bloque se definen los botones a usar para crear un Book-->
             <div class="collapse navbar-collapse" id="book-navbar">
-                <button id="create-book" class="btn btn-default navbar-btn" ng-show="list" ng-click="list = false"><span class="glyphicon glyphicon-plus"></span> Create</button>
-                <button id="refresh-book" class="btn btn-default navbar-btn" ng-show="list" ng-click="list = true"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                <button id="save-book" class="btn btn-default navbar-btn" ng-hide="list" ng-click="list = true"><span class="glyphicon glyphicon-save"></span> Save</button>
-                <button id="cancel-book" class="btn btn-default navbar-btn" ng-hide="list" ng-click="list = true"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                <button id="create-book" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.createRecord()"><span class="glyphicon glyphicon-plus"></span> Create</button>
+                <button id="refresh-book" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.fetchRecords()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                <button id="save-book" type="submit" form="book-form" class="btn btn-default navbar-btn" ng-show="ctrl.editMode"><span class="glyphicon glyphicon-save"></span> Save</button>
+                <button id="cancel-book" type="button" form="book-form" class="btn btn-default navbar-btn" ng-show="ctrl.editMode" ng-click="form.$setPristine(); ctrl.fetchRecords();"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
             </div>
         </div>
     </nav>
-    </div>
-    <!-- El siguiente bloque DIV contiene los libros para mostrar -->
-    <div class="col-sm-12" ng-if="list">
-        <!-- El siguiente bloque es el primer DIV para el primer libro-->
-        <div class="col-md-4 col-sm-6 col-lg-3 well">
-            <div class="col-md-12">
-                <div class="img-thumbnail" id="image">
-                    <img class="img-responsive" style="height: 20vmax;" src="http://ecx.images-amazon.com/images/I/61KaCYPW28L._AA160_.jpg" alt="">
-                </div>
-            </div>
-            <div class="caption" >
-                <p><strong>Name:</strong> The Life We Bury</p>
-                <p><strong>Description:</strong> College student Joe Talbert has the modest goal of completing a writing assignment for an English class.</p>
-                <p><strong>ISBN:</strong> 1616149981</p>
-                <p><strong>Publish Date:</strong> October, 2014</p>
-                <p>
-                    <button id="edit-book-1" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button id="delete-book-1" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-                </p>
-            </div>
-        </div>
-        <!-- El siguiente bloque es el segundo DIV para el segundo libro-->
-        <div class="col-md-4 col-sm-6 col-lg-3 well">
-            <div class="col-md-12">
-                <div class="img-thumbnail" id="image">
-                    <img class="img-responsive" style="height: 20vmax;" src="http://ecx.images-amazon.com/images/I/51MfO0a70ZL._AA160_.jpg" alt="">
-                </div>
-            </div>
-            <div class="caption" >
-                <p><strong>Name:</strong> All the Light We Cannot See</p>
-                <p><strong>Description:</strong> Marie-Laure lives with her father in Paris near the Museum of Natural History, where he works as the master of its thousands of locks.</p>
-                <p><strong>ISBN:</strong> 1476746583</p>
-                <p><strong>Publish Date:</strong> May, 2014</p>
-                <p>
-                    <button id="edit-book-2" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button id="delete-book-2" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-                </p>
-            </div>
-        </div>
-        <!-- El siguiente bloque es el tercer DIV para el tercer libro-->
-        <div class="col-md-4 col-sm-6 col-lg-3 well">
-            <div class="col-md-12">
-                <div class="img-thumbnail" id="image">
-                    <img class="img-responsive" style="height: 20vmax;" src="http://ecx.images-amazon.com/images/I/51OiLCU-zyL._AA160_.jpg" alt="">
-                </div>
-            </div>
-            <div class="caption" >
-                <p><strong>Name:</strong> What Alice Forgot</p>
-                <p><strong>Description:</strong> Alice Love is twenty-nine, crazy about her husband, and pregnant with her first child.</p>
-                <p><strong>ISBN:</strong> 9780425247440</p>
-                <p><strong>Publish Date:</strong> April, 2012</p>
-                <p>
-                    <button id="edit-book-3" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button id="delete-book-3" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-                </p>
-            </div>
-        </div>
-    </div>
-    <!-- Bloque que se activa cuando se presiona el boton Create, el cual permite crear un nuevo Book-->
-    <div ng-if="!list" class="well">
-        <form novalidate name="form" id="book-form" role="form">
-            <fieldset>
-                <input id="id" class="form-control" type="hidden"/>
-                <div class="form-group col-md-12">
-                    <label for="name" class="col-md-2 control-label">Name</label>
-                    <div class="col-md-10">
-                        <input id="name" name="name" class="form-control" type="text" required />
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="description" class="col-md-2 control-label">Description</label>
-                    <div class="col-md-10">
-                        <input id="description" name="description" class="form-control" type="text" required />
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="isbn" class="col-md-2 control-label">ISBN</label>
-                    <div class="col-md-10">
-                        <input id="isbn" name="isbn" class="form-control" type="text" required />
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="image" class="col-md-2 control-label">Image</label>
-                    <div class="col-md-10">
-                        <input id="image" name="image" class="form-control" type="text" required />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-     <!--Colocando el tab-->
-    <div ng-if="!list">
-     <ul class="nav nav-tabs">
-         <li>
-         <a href ng-click="">Reviews</a>        
-         </li>
-     </ul>   
-    <div ng-init="list = true">
-    <div id="navbar">
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#editorial-navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand">Reviews</a>
-                </div>
+</div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <!-- En el siguiente bloque se definen los botones a usar para crear una Review-->
-                <div class="collapse navbar-collapse" id="editorial-navbar">
-                    <button id="create-review" class="btn btn-default navbar-btn" ng-show="list" ng-click="list = false"><span class="glyphicon glyphicon-plus"></span> Create</button>
-                    <button id="refresh-review" class="btn btn-default navbar-btn" ng-show="list" ng-click="list = true"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                    <button id="save-review" class="btn btn-default navbar-btn" ng-hide="list" ng-click="list = true"><span class="glyphicon glyphicon-save"></span> Save</button>
-                    <button id="cancel-review" class="btn btn-default navbar-btn" ng-hide="list" ng-click="list = true"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+<div ng-hide="ctrl.editMode">
+    <div class="col-sm-12">
+        <div ng-repeat="record in records">
+            <div class="col-md-4 col-sm-6 col-lg-3 well">
+                <div class="col-md-12">
+                    <div class="img-thumbnail" id="image" ng-if="record.image">
+                        <a ng-href="{{record.image}}" target="_blank"><img class="img-responsive" style="height: 20vmax;" ng-src="{{record.image}}" alt="{{record.image}}"></a>
+                    </div>
                 </div>
+                <div class="caption" >
+                    <p><strong>Name:</strong> <span id="{{$index}}-name">{{record.name}}</span></p>
+                    <p><strong>Description:</strong> <span id="{{$index}}-description">{{record.description}}</span></p>
+                    <p><strong>ISBN:</strong> <span id="{{$index}}-isbn">{{record.isbn}}</span></p>
+                    <p><strong>Publish Date:</strong> <span id="{{$index}}-publishDate">{{record.publishDate| date}}</span></p>
+                </div>
+                <p class="text-center">
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" ng-click="ctrl.editRecord(record)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteRecord(record)"><span class="glyphicon glyphicon-minus"></span> Remove</button>
+                </p>
             </div>
-        </nav>
-    </div>
-    <!-- El siguiente bloque DIV contiene los review para mostrar -->
-    <div class="col-md-12" ng-if="list">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Source</th>
-                    <th>Descrption</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button id="edit-author-1" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                        <button id="delete-author-1" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button id="edit-author-2" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                        <button id="delete-author-2" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button id="edit-author-3" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                        <button id="delete-author-3" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- Bloque que se activa cuando se presiona el boton Create, el cual permite crear Review-->
-    <div ng-if="!list" class="well">
-        <form novalidate name="form" id="author-form" role="form">
-            <fieldset>
-                <input id="id" class="form-control" type="hidden"/>
-                <div class="form-group col-md-12"> 
-                    <label for="name" class="col-md-2 control-label">Name</label>
-                    <div class="col-md-10">
-                        <input id="name" name="name" class="form-control" type="text" required />
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="sourceReview" class="col-md-2 control-label">Source</label>
-                    <div class="col-md-10">
-                        <input id="sourceReview" name="sourceReview" class="form-control" type="text" required />
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="descriptionReview" class="col-md-2 control-label">Description</label>
-                    <div class="col-md-10">
-                        <textarea id="descriptionReview" name="descriptionReview" class="form-control" required ></textarea>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
+        </div>
     </div>
 </div>
+<div ng-show="ctrl.editMode" class="col-md-6 well"> 
+    <form novalidate name="form" id="book-form" role="form" ng-submit="ctrl.saveRecord()">
+        <alert ng-messages="form.$error" type="danger" close="" ng-hide="!form.$error.required">
+            <div ng-message="required">
+                Please, Fill the required fields!
+            </div>
+        </alert>  
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentRecord.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="name" class="col-md-2 control-label">Name</label>
+                <div class="col-md-10">
+                    <input id="name" name="name" class="form-control" type="text" ng-model="currentRecord.name" required />
+                </div>
+            </div>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.description.$valid && form.description.$dirty, 'has-error': form.description.$invalid && (form.description.$dirty || form.$submitted)}" >
+                <label for="description" class="col-md-2 control-label">Description</label>
+                <div class="col-md-10">
+                    <input id="description" name="description" class="form-control" type="text" ng-model="currentRecord.description" required />
+                </div>
+            </div>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.isbn.$valid && form.isbn.$dirty, 'has-error': form.isbn.$invalid && (form.isbn.$dirty || form.$submitted)}" >
+                <label for="isbn" class="col-md-2 control-label">ISBN</label>
+                <div class="col-md-10">
+                    <input id="isbn" name="isbn" class="form-control" type="text" ng-model="currentRecord.isbn" required />
+                </div>
+            </div>
+
+            <div class="form-group col-md-12" ng-class="{'has-success': form.image.$valid && form.image.$dirty, 'has-error': form.image.$invalid && (form.image.$dirty || form.$submitted)}" >
+                <label for="image" class="col-md-2 control-label">Image</label>
+                <div class="col-md-10">
+                    <input id="image" name="image" class="form-control" type="text" ng-model="currentRecord.image" required />
+                </div>
+            </div>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.editorial.$valid && form.editorial.$dirty, 'has-error': form.editorial.$invalid && (form.editorial.$dirty || form.$submitted)}" >
+                <label for="editorial" class="col-md-2 control-label">Editorial</label>
+                <div class="col-md-10">
+                    <select id="editorial" name="editorial" ng-options="rc.name for rc in editorials track by rc.id" class="form-control" type="text" ng-model="currentRecord.editorial" ></select>
+                </div>
+            </div>
+            <div class="form-group col-md-12" ng-class="{'has-success': !form.publishDate.$error.required && form.publishDate.$dirty, 'has-error': form.publishDate.$error.required && (form.publishDate.$dirty || form.$submitted)}" >
+                <label for="publishDate" class="col-md-2 control-label">Publish Date</label>
+                <div class="col-md-10">
+                    <p class="input-group">
+                        <input type="text" id="publishDate" name="publishDate" class="form-control" ng-model="currentRecord.publishDate" ng-required="model.required" datepicker-popup is-open="opened" />
+                        <span class="input-group-btn">
+                            <button type="button" id="publishDate-datepicker" class="btn btn-default" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </div>
