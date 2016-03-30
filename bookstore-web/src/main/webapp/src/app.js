@@ -17,9 +17,13 @@
             $stateProvider
                     .state('book', {
                         url: '/book',
-                        controller: "bookCtrl",
-                        controllerAs: "ctrl",
-                        templateUrl: "src/modules/book/book.tpl.html"
+                        views: {
+                            "viewLeft": {controller: "bookCtrl",
+                                controllerAs: "ctrl",
+                                templateUrl: "src/modules/book/book.tpl.html"},
+                            "viewRight2": {templateUrl: "src/views/promotion.tpl.html"},
+                            "viewRight1": {templateUrl: "src/views/bestseller.tpl.html"}
+                        }
                     })
                     .state('editorial', {
                         url: '/editorial',
