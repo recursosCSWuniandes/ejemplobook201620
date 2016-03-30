@@ -11,7 +11,6 @@
                 </button>
                 <a class="navbar-brand">Reviews</a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="review-navbar">
                 <button id="create-review" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.createRecord()"><span class="glyphicon glyphicon-plus"></span> Create</button>
@@ -45,7 +44,7 @@
         </tbody>
     </table>
 </div>
-<div ng-show="ctrl.editMode" class="col-md-6 well">
+<div ng-show="ctrl.editMode" class="col-md-12 well">
     <form novalidate name="form" id="review-form" role="form" ng-submit="form.$valid && ctrl.saveRecord()">
         <alert ng-messages="form.$error" type="danger" close="" ng-hide="!form.$error.required">
             <div ng-message="required">

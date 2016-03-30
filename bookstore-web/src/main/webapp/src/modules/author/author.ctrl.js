@@ -1,34 +1,14 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 (function (ng) {
+    var mod = ng.module("authorModule");
 
-    var mod = ng.module("reviewModule");
-
-    mod.controller("reviewCtrl", ["$scope", function ($scope) {
-
-            $scope.alerts = [];
+    mod.controller("authorCtrl", ["$scope", function ($scope) {
             $scope.currentRecord = {};
-            $scope.records = [
-                {
+            $scope.records = [{
                     id: 1,
-                    name: 'Para los amantes de la lectura',
-                    source: 'El Tiempo',
-                    description: 'El periódico El Tiempo recomienda a sus lectores más seleccionados este ejemplar. '
-                   
-                },
-                {
-                    id: 2,
-                    name: 'Solo para programadores',
-                    source: 'Universidad de Los Andes',
-                    description: 'Se recomienda el libro únicamente para programadores.'
-                   
-                }
-            ];
+                    name: "Nombre del autor",
+                    birthDate: "12-12-2016"
+                }];
+            $scope.alerts = [];
 
             $scope.today = function () {
                 $scope.value = new Date();
@@ -63,26 +43,21 @@
                 showMessage(msg, "danger");
             };
 
-            this.showSuccess = function (msg) {
-                showMessage(msg, "success");
-            };
-
             var self = this;
             function responseError(response) {
                 self.showError(response.data);
             }
+
             //Variables para el controlador
             this.readOnly = false;
             this.editMode = false;
-
 
             this.changeTab = function (tab) {
                 $scope.tab = tab;
             };
 
             //Ejemplo alerta
-            showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje exitoso", "success");
-
+            showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de atención", "warning");
 
 
             this.createRecord = function () {
@@ -91,35 +66,22 @@
 
             };
 
-
             this.editRecord = function (record) {
                 self.editMode = true;
 
             };
 
-
             this.fetchRecords = function () {
-
                 self.editMode = false;
 
             };
-
-
             this.saveRecord = function () {
-
                 self.fetchRecords();
-
             };
-
-
             this.deleteRecord = function (record) {
-                self.fetchRecords();
-
             };
-
 
             this.fetchRecords();
-
         }]);
 
 })(window.angular);
