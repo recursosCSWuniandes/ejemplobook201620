@@ -27,15 +27,26 @@
                     })
                     .state('editorial', {
                         url: '/editorial',
-                        controller: "editorialCtrl",
-                        controllerAs: "ctrl",
-                        templateUrl: "src/modules/editorial/editorial.tpl.html"
+                        views: {
+                            "viewLeft": {
+                                controller: "editorialCtrl",
+                                controllerAs: "ctrl",
+                                templateUrl: "src/modules/editorial/editorial.tpl.html"
+                            }
+                        }
+
                     })
                     .state('author', {
                         url: '/author',
-                        controller: "authorCtrl",
-                        controllerAs: "ctrl",
-                        templateUrl: "src/modules/author/author.tpl.html"
+                        views: {
+                            "viewLeft": {
+                                controller: "authorCtrl",
+                                controllerAs: "ctrl",
+                                templateUrl: "src/modules/author/author.tpl.html",
+                            },
+                            "viewRight2": {templateUrl: "src/views/promotion.tpl.html"},
+                            "viewRight1": {templateUrl: "src/views/mostread.tpl.html"}
+                        }
                     })
                     .state('review', {
                         url: '/review',
