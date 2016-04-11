@@ -2,6 +2,7 @@
 
     var mod = ng.module("mainApp", [
         "ui.router",
+        "ui.bootstrap",
         "bookModule",
         "editorialModule",
         "authorModule",

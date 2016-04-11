@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#book-navbar">
+                <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed=true" ng-click="navCollapsed=!navCollapsed" data-toggle="collapse" data-target="#book-navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -12,7 +12,7 @@
                 <a class="navbar-brand">Books</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="book-navbar">
+            <div class="collapse navbar-collapse" id="book-navbar" uib-collapse="navCollapsed">
                 <button id="create-book" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.createRecord()"><span class="glyphicon glyphicon-plus"></span> Create</button>
                 <button id="refresh-book" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.fetchRecords()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                 <button id="save-book" type="submit" form="book-form" class="btn btn-default navbar-btn" ng-show="ctrl.editMode"><span class="glyphicon glyphicon-save"></span> Save</button>
@@ -89,7 +89,7 @@
                 <label for="publishDate" class="col-md-2 control-label">Publish Date</label>
                 <div class="col-md-10">
                     <p class="input-group">
-                        <input type="text" id="publishDate" name="publishDate" class="form-control" ng-model="currentRecord.publishDate" ng-required="model.required" datepicker-popup is-open="opened" />
+                        <input type="text" id="publishDate" name="publishDate" class="form-control" ng-model="currentRecord.publishDate" ng-required="model.required" uib-datepicker-popup is-open="opened" readonly required />
                         <span class="input-group-btn">
                             <button type="button" id="publishDate-datepicker" class="btn btn-default" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
                         </span>
